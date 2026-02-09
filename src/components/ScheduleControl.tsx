@@ -10,12 +10,10 @@ import {
   FiX,
   FiCheck,
   FiAlertCircle,
-  FiRefreshCw,
   FiCalendar,
   FiWatch,
   FiZap,
   FiList,
-  FiSettings,
   FiType,
   FiHash,
   FiTarget,
@@ -141,7 +139,7 @@ export default function ScheduleControl({ schedules, reload }: Props) {
   } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"form" | "list">("list");
-  const [timeFormat, setTimeFormat] = useState("24h");
+  const [timeFormat] = useState("24h");
   const [inputMode, setInputMode] = useState<InputMode>("slider");
   const [timeString, setTimeString] = useState("09:00");
   const previousSchedulesLength = useRef(schedules.length);
@@ -182,7 +180,7 @@ export default function ScheduleControl({ schedules, reload }: Props) {
     setIsLoading(true);
     reload();
     setTimeout(() => setIsLoading(false), 500);
-  }, [reload]);
+  }, [reload,isLoading]);
 
   const addSchedule = useCallback(() => {
     try {
@@ -362,6 +360,9 @@ export default function ScheduleControl({ schedules, reload }: Props) {
                       {schedules.length} active schedule
                       {schedules.length !== 1 ? "s" : ""}
                     </p>
+                    <button onClick={handleReload} className="bg-sky-400 p-1 rounded-xl">
+                      Refresh
+                    </button>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 animate-pulse" />
                       <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">

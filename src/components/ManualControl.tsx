@@ -3,11 +3,9 @@ import { motion } from "framer-motion";
 import {
   FiPower,
   FiBell,
-  FiVolume2,
   FiZap,
   FiPlay,
   FiStopCircle,
-  FiWatch,
 } from "react-icons/fi";
 import { publish } from "../mqtt/mqttService";
 
@@ -37,21 +35,6 @@ export default function ManualControl() {
     setIsPressing(false);
     publish("OFF");
     setActiveEffect(null);
-  };
-
-  // Ring with custom duration
-  const ringWithDuration = () => {
-    setActiveEffect("ring");
-    publish(`RING:${duration}`);
-    setTimeout(() => setActiveEffect(null), 500);
-  };
-
-  // Quick ring presets
-  const quickRing = (seconds: number) => {
-    setDuration(seconds);
-    setActiveEffect("quick");
-    publish(`RING:${seconds}`);
-    setTimeout(() => setActiveEffect(null), 300);
   };
 
   return (
