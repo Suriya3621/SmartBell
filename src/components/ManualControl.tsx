@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import {
   FiPower,
   FiBell,
-  FiPause,
   FiVolume2,
   FiZap,
   FiPlay,
