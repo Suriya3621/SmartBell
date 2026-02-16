@@ -11,7 +11,6 @@ import { publish } from "../mqtt/mqttService";
 
 export default function ManualControl() {
   const [isOn, setIsOn] = useState(false);
-  const [duration, setDuration] = useState(5);
   const [isPressing, setIsPressing] = useState(false);
   const [activeEffect, setActiveEffect] = useState<string | null>(null);
 

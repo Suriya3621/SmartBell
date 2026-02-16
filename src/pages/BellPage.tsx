@@ -14,25 +14,32 @@ export default function BellPage() {
     connectMQTT(handleMessage, requestList);
   }, []);
 
+
   const handleMessage = (_topic: string, msg: string) => {
-    if (!msg.startsWith("LIST:RESP")) return;
+  if (!msg.startsWith("LIST:RESP")) return;
 
-    const [, , index, h, m, c, d] = msg.split(":");
+  const parts = msg.split(":");
+  if (parts.length !== 8) return;
 
-    setSchedules((prev) => {
-      const filtered = prev.filter((s) => s.index !== +index);
-      return [
-        ...filtered,
-        {
-          index: +index,
-          hour: +h,
-          minute: +m,
-          count: +c,
-          duration: +d,
-        },
-      ].sort((a, b) => a.index - b.index);
-    });
-  };
+  const [, , index, h, m, c, d, e] = parts;
+
+  setSchedules((prev) => {
+    const filtered = prev.filter((s) => s.index !== Number(index));
+
+    return [
+      ...filtered,
+      {
+        index: Number(index),
+        hour: Number(h),
+        minute: Number(m),
+        count: Number(c),
+        duration: Number(d),
+        enabled: Boolean(Number(e))
+      },
+    ].sort((a, b) => a.index - b.index);
+  });
+};
+
 
   const requestList = () => {
     setSchedules([]);
@@ -42,7 +49,7 @@ export default function BellPage() {
   return (
     <div>
       {/* 🔹 TOP NAV */}
-      <div>
+      <div className="bg-slate-50 dark:bg-slate-900">
         <Nav />
       </div>
 
